@@ -66,31 +66,31 @@ module.exports = function(grunt) {
           },
 
         },
-        watch: {
-           scripts: {
-            files: ['js/*.js','views/js/*.js'],
-            tasks: 'uglify',
+      watch: {
+         scripts: {
+          files: ['js/*.js','views/js/*.js'],
+          tasks: 'uglify',
+        options: {
+            spawn: false,
+          },
+         },
+         css: {
+          files: ['css/*.css','views/css/*.css'],
+          tasks: ['cssmin'],
           options: {
-              spawn: false,
-            },
-           },
-           css: {
-            files: ['css/*.css','views/css/*.css'],
-            tasks: ['cssmin'],
-            options: {
-              spawn: false,
-            },
-           },
-           img: {
-            files: ['img/*.{png,jpg,gif}','views/images/*.{png,jpg,gif}'],
-            tasks: ['imagemin'],
-            options: {
-              spawn: false,
-            },
-           },
+            spawn: false,
+          },
+         },
+         img: {
+          files: ['img/*.{png,jpg,gif}','views/imagesgit /*.{png,jpg,gif}'],
+          tasks: ['imagemin'],
+          options: {
+            spawn: false,
+          },
+         },
 
 
-        },
+      },
 
 
     });
