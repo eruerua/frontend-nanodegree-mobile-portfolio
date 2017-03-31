@@ -82,7 +82,7 @@ module.exports = function(grunt) {
           },
          },
          img: {
-          files: ['img/*.{png,jpg,gif}','views/imagesgit /*.{png,jpg,gif}'],
+          files: ['img/*.{png,jpg,gif}','views/images/*.{png,jpg,gif}'],
           tasks: ['imagemin'],
           options: {
             spawn: false,
@@ -96,4 +96,5 @@ module.exports = function(grunt) {
     });
   // Register default tasks
   grunt.registerTask('default', ['watch']);
+  grunt.registerTask('imagmin', ['imagemin']);
 };
