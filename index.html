@@ -8,8 +8,9 @@
     <title>Cameron Pittman: Portfolio</title>
 
     <!-- Hmm, what is the impact of web fonts on speed? Measure it... -->
-<!--     <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"> -->
+<!--     <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"> 删除掉没有的外部css，防止阻止呈现-->
 
+<!-- 内嵌css -->
     <style type="text/css">
       html {
         font-size: 100%;
@@ -61,7 +62,8 @@
         header p { padding-left: 4.5em;}
       }
     </style>
-    <link href="css/print.min.css" rel="stylesheet" media="print">
+    <!-- 媒体查询，打印时呈现 -->
+    <link href="dist/css/print.min.css" rel="stylesheet" media="print">
 
     <script>
       (function(w,g){w['GoogleAnalyticsObject']=g;
@@ -72,12 +74,12 @@
       ga('send', 'pageview');
     </script>
     <script async src="http://www.google-analytics.com/analytics.js"></script>
-    <script async src="js/perfmatters.min.js"></script>
+    <script async src="dist/js/perfmatters.min.js"></script>
   </head>
 
   <body>
     <header>
-      <a href="/"><img src="img/dist/profilepic.jpg"></a>
+      <a href="/"><img src="dist/img/profilepic.jpg"></a>
       <p>Cameron Pittman<br><span>Course Developer</span></p>
     </header>
 
@@ -107,8 +109,8 @@
           </li>
 
           <li>
-            <img style="width: 100px;" src="views/images/dist/pizzeria.jpg">
-            <a href="views/pizza.html">Cam's Pizzeria</a>
+            <img style="width: 100px;" src="dist/views/images/pizzeria.jpg">
+            <a href="dist/views/pizza.html">Cam's Pizzeria</a>
             <p>Who wants a performant pizza?</p>
           </li>
         </ul>
