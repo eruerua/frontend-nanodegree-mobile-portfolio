@@ -46,7 +46,7 @@ module.exports = function(grunt) {
       imagemin: {                          // Task
           dynamic: {
             options: {                       // Target options
-              optimizationLevel: 3,
+              optimizationLevel: 5,
               svgoPlugins: [{ removeViewBox: false }],
             },                         // Another target
             files: [{
