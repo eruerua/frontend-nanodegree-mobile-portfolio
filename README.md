@@ -1,57 +1,24 @@
+## 如何运行
 
-## Website Performance Optimization portfolio project
+[下载](https://github.com/eruerua/frontend-nanodegree-mobile-portfolio)项目到任意位置，运行index即可，或者可以直接打开[地址](https://github.com/eruerua/eruerua.github.io)
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
+## 构建工具
 
-To get started, check out the repository and inspect the code.
+使用了grunt中的uglify，cssmin，imgmin，work构建工具，在确定系统安装grunt后，即可使用npm install安装必要的工具，安装完毕后输入grunt 即可运行工作流。
 
-### Getting started
+## 优化过程
 
-#### Part 1: Optimize PageSpeed Insights score for index.html
+- 根据pagespeed的反馈，index.html 存在阻止呈现的外部文件分别为
 
-Some useful tips to help you get started:
+  1. fonts.googleapis.com/css?family=Open+Sans:400,700,
+  2. style.min.css,
+  3. print.min.css,
+  4. http://www.google-analytics.com/analytics.js
 
-1. Check out the repository
-1. To inspect the site on your phone, you can run a local server
+  对于js可以采用异步加载的方式；对于关键部位而且体量不大的css直接采用内嵌到html的方法；对于print可以采用媒体查询的方式，在需要的时候可以加载；对于google字体如果不需要，就可以直接删除掉。
 
-  ```bash
-  $> cd /path/to/your-project-folder
-  $> python -m SimpleHTTPServer 8080
-  ```
+- 采用grunt工作流方式压缩照片和css，js。
 
-1. Open a browser and visit localhost:8080
-1. Download and install [ngrok](https://ngrok.com/) to the top-level of your project directory to make your local server accessible remotely.
+- 对于pizza.html滚动的优化，通过录制滚动Timeline发现main.js的updatePositions()函数中document.body.scrollTop在循环体中导致Forced reflow，所以在循环体外设置变量为document.body.scrollTop，即可避免。
 
-  ``` bash
-  $> cd /path/to/your-project-folder
-  $> ./ngrok http 8080
-  ```
-
-1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
-
-Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
-
-#### Part 2: Optimize Frames per Second in pizza.html
-
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
-
-You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
-
-### Optimization Tips and Tricks
-* [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
-* [Analyzing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/analyzing-crp.html "analyzing crp")
-* [Optimizing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/optimizing-critical-rendering-path.html "optimize the crp!")
-* [Avoiding Rendering Blocking CSS](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css.html "render blocking css")
-* [Optimizing JavaScript](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript.html "javascript")
-* [Measuring with Navigation Timing](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp.html "nav timing api"). We didn't cover the Navigation Timing API in the first two lessons but it's an incredibly useful tool for automated page profiling. I highly recommend reading.
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/eliminate-downloads.html">The fewer the downloads, the better</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer.html">Reduce the size of text</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization.html">Optimize images</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
-
-### Customization with Bootstrap
-The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstrap</a> framework. All custom styles are in `dist/css/portfolio.css` in the portfolio repo.
-
-* <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
-* <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
-
+- 同样录制pizza尺寸变化滑块的Timeline，发现determineDX引发的Forced reflow，采用课程提出的解决方法重写了changePizzaSizes函数，避免不必要的浪费

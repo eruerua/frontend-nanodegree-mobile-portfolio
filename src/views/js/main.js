@@ -421,7 +421,7 @@ var resizePizzas = function(size) {
 
   changeSliderLabel(size);
 
-  // Iterates through pizza elements on the page and changes their widths
+  // 重写changePizzaSizes，避免不必要的语句导致forced reflow。
   function changePizzaSizes(size) {
     switch(size) {
       case "1":
@@ -487,7 +487,7 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
-  var scrollTop = document.body.scrollTop;
+  var scrollTop = document.body.scrollTop;//在循环体外赋值然后调入到循环体中，避免forced reflow。
   var items = document.querySelectorAll('.mover');
   for (var i = 0; i < items.length; i++) {
     var phase = Math.sin((scrollTop / 1250) + (i % 5));

@@ -22,7 +22,7 @@ module.exports = function(grunt) {
             'dist/views/js/main.min.js': ['src/views/js/main.js']
           }
         }
-      },
+    },
     cssmin: {
       target: {
         files: [{
@@ -65,7 +65,7 @@ module.exports = function(grunt) {
           }]
         },
 
-      },
+    },
     watch: {
        scripts: {
         files: ['src/js/*.js','src/views/js/*.js'],
@@ -89,9 +89,7 @@ module.exports = function(grunt) {
         },
        },
     },
-
-
-    });
+  });
   // Register default tasks
   grunt.registerTask('default', ['watch']);
   grunt.registerTask('allwork', ['imagemin','uglify','cssmin']);
