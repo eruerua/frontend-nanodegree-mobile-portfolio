@@ -1,6 +1,6 @@
 ## 如何运行
 
-[下载](https://github.com/eruerua/frontend-nanodegree-mobile-portfolio)项目到任意位置，运行index即可，或者可以直接打开[地址](https://github.com/eruerua/eruerua.github.io)
+[下载](https://github.com/eruerua/frontend-nanodegree-mobile-portfolio)项目到任意位置，运行index即可，或者可以直接打开[地址](https://eruerua.github.io/)
 
 ## 构建工具
 
@@ -19,6 +19,6 @@
 
 - 采用grunt工作流方式压缩照片和css，js。
 
-- 对于pizza.html滚动的优化，通过录制滚动Timeline发现main.js的updatePositions()函数中document.body.scrollTop在循环体中导致Forced reflow，所以在循环体外设置变量为document.body.scrollTop，即可避免。
+- 对于pizza.html滚动的优化，通过录制滚动Timeline发现main.js的updatePositions()函数中document.body.scrollTop在循环体中导致Forced reflow，所以在循环体外把document.body.scrollTop赋值给变量，然后代入到循环体中，即可避免。
 
 - 同样录制pizza尺寸变化滑块的Timeline，发现determineDX引发的Forced reflow，采用课程提出的解决方法重写了changePizzaSizes函数，避免不必要的浪费
