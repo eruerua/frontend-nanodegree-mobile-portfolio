@@ -406,13 +406,13 @@ var resizePizzas = function(size) {
   function changeSliderLabel(size) {
     switch(size) {
       case "1":
-        document.querySelector("#pizzaSize").innerHTML = "Small";
+        document.getElementById("#pizzaSize").innerHTML = "Small";
         return;
       case "2":
-        document.querySelector("#pizzaSize").innerHTML = "Medium";
+        document.getElementById("#pizzaSize").innerHTML = "Medium";
         return;
       case "3":
-        document.querySelector("#pizzaSize").innerHTML = "Large";
+        document.getElementById("#pizzaSize").innerHTML = "Large";
         return;
       default:
         console.log("bug in changeSliderLabel");
@@ -436,7 +436,7 @@ var resizePizzas = function(size) {
       default:
         console.log("bug in sizeSwitcher");
     }
-    var randomPizza = document.querySelectorAll(".randomPizzaContainer");
+    var randomPizza = document.getElementsByClassName(".randomPizzaContainer");
 
     for (var i = 0; i < randomPizza.length; i++) {
       randomPizza[i].style.width = newWidth + "%";
@@ -488,11 +488,13 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
   var scrollTop = document.body.scrollTop;//在循环体外赋值然后调入到循环体中，避免forced reflow。
-  var items = document.querySelectorAll('.mover');
+  var items = document.getElementsByClassName('.mover');
   for (var i = 0; i < items.length; i++) {
     var phase = Math.sin((scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+    // items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+    items[i].style.transform = "translateX(" + 100 * phase + "px)";
   }
+  // 里的使用 left 属性改变位置会强制 layout 重新描绘(paint) pizza的，可以考虑使用 translateX 让 item 移动，避免重新描绘 (paint) pizza
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
@@ -505,12 +507,18 @@ function updatePositions() {
 }
 
 // runs updatePositions on scroll
-window.addEventListener('scroll', updatePositions);
+// window.addEventListener('scroll', updatePositions);
+window.addEventListener('scroll', requestUpdate);
+function requestUpdate() {
+  requestAnimationFrame(updatePositions);
+}
+// 建议使用 requestAnimationFrame() 进行连续的帧操作, 它能减少掉帧的概率，使得动画更加流畅
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
+  var fragment = document.createDocumentFragment();
   for (var i = 0; i < 200; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
@@ -519,7 +527,9 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    fragment.appendChild(elem);
   }
+  document.getElementById("#movingPizzas1").appendChild(fragment);
+  // 由于 Fragment(文档片段) 位于内存中，而不是主DOM树的一部分，因此将子标签附加其上不会导致页面回流（元素的位置和几何的重新计算）。 因此，使用 Fragment(文档片段) 往往会导致更好的性能。
   updatePositions();
 });
